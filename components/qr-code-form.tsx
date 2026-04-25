@@ -60,7 +60,7 @@ export default function QRCodeForm() {
   const [isCodeFromUrl, setIsCodeFromUrl] = useState<boolean>(false);
 
   const GOOGLE_SCRIPT_URL =
-    "https://script.google.com/macros/s/AKfycbzfcdevw5wZLelGrr2tNvN6-wU_OmXdfaDR6tFsOlwSQtd9TAqw9qUv0lVjzBDF-6iO/exec";
+    "https://script.google.com/macros/s/AKfycbwVbmFbljofC6OJTmDQSPEq7kx50RfE4ldf7yNopwQg_Bshbwf8Pj3XjAJCPZ_LDjNH/exec";
 
   // Fetch coupons on mount
   useEffect(() => {
@@ -221,7 +221,7 @@ export default function QRCodeForm() {
       });
 
       const result = await response.json();
-      
+
       if (result.success) {
         return { success: true, message: "Payout initiated successfully!" };
       } else {
@@ -317,7 +317,7 @@ export default function QRCodeForm() {
       // We don't await this if we want the success screen to show immediately,
       // but it's better to await to ensure the user knows if the payment was at least initiated.
       const payoutResult = await initiateRazorpayPayout(formData, validation.rewardAmount);
-      
+
       if (!payoutResult.success) {
         console.warn("Coupon marked as used, but payout failed:", payoutResult.message);
         // We still show success because the coupon is used, but maybe add a note?
@@ -405,27 +405,24 @@ export default function QRCodeForm() {
                 </div>
 
                 <div
-                  className={`flex-1 h-0.5 mx-1.5 rounded-full ${
-                    formData.couponCode
-                      ? "bg-gradient-to-r from-red-500 to-red-400"
-                      : "bg-gray-200"
-                  }`}
+                  className={`flex-1 h-0.5 mx-1.5 rounded-full ${formData.couponCode
+                    ? "bg-gradient-to-r from-red-500 to-red-400"
+                    : "bg-gray-200"
+                    }`}
                 />
 
                 <div className="flex flex-col items-center gap-0.5">
                   <div
-                    className={`flex items-center justify-center w-6 h-6 text-[10px] font-bold rounded-full ${
-                      formData.couponCode
-                        ? "bg-gradient-to-br from-red-500 to-red-600 text-white"
-                        : "bg-gray-100 text-gray-400"
-                    }`}
+                    className={`flex items-center justify-center w-6 h-6 text-[10px] font-bold rounded-full ${formData.couponCode
+                      ? "bg-gradient-to-br from-red-500 to-red-600 text-white"
+                      : "bg-gray-100 text-gray-400"
+                      }`}
                   >
                     2
                   </div>
                   <span
-                    className={`text-[8px] font-semibold uppercase ${
-                      formData.couponCode ? "text-red-600" : "text-gray-400"
-                    }`}
+                    className={`text-[8px] font-semibold uppercase ${formData.couponCode ? "text-red-600" : "text-gray-400"
+                      }`}
                   >
                     Details
                   </span>
@@ -457,9 +454,8 @@ export default function QRCodeForm() {
                     value={formData.couponCode}
                     onChange={handleInputChange}
                     placeholder="ENTER CODE"
-                    className={`pl-10 h-10 border-2 border-red-200 bg-white focus:bg-white focus:border-red-500 focus:ring-red-500 font-mono text-center tracking-[0.2em] text-sm font-bold placeholder:font-normal placeholder:tracking-normal rounded-lg ${
-                      isCodeFromUrl ? "bg-red-50 cursor-not-allowed" : ""
-                    }`}
+                    className={`pl-10 h-10 border-2 border-red-200 bg-white focus:bg-white focus:border-red-500 focus:ring-red-500 font-mono text-center tracking-[0.2em] text-sm font-bold placeholder:font-normal placeholder:tracking-normal rounded-lg ${isCodeFromUrl ? "bg-red-50 cursor-not-allowed" : ""
+                      }`}
                     autoComplete="off"
                     readOnly={isCodeFromUrl}
                   />
@@ -554,11 +550,10 @@ export default function QRCodeForm() {
               {/* Error/Success Feedback */}
               {message.content && (
                 <div
-                  className={`text-center text-xs font-semibold p-3 rounded-xl border ${
-                    message.type === "success"
-                      ? "bg-green-50 text-green-700 border-green-200"
-                      : "bg-red-50 text-red-600 border-red-200"
-                  }`}
+                  className={`text-center text-xs font-semibold p-3 rounded-xl border ${message.type === "success"
+                    ? "bg-green-50 text-green-700 border-green-200"
+                    : "bg-red-50 text-red-600 border-red-200"
+                    }`}
                 >
                   <div className="flex items-center justify-center gap-2">
                     {message.type === "error" && (

@@ -37,7 +37,7 @@ import {
 } from "@/components/ui/dialog";
 
 const GOOGLE_SCRIPT_URL =
-  "https://script.google.com/macros/s/AKfycbyadngWVh_zKgHMrglHxs3UI7jigReEjE__5Arxt0oMwR5rnl3UiJ_9EbsR4hQiPiNa/exec"
+  "https://script.google.com/macros/s/AKfycbwVbmFbljofC6OJTmDQSPEq7kx50RfE4ldf7yNopwQg_Bshbwf8Pj3XjAJCPZ_LDjNH/exec"
 
 const COUPONS_SHEET = "Coupons";
 const CONSUMERS_SHEET = "User_Claimed_Coupon";

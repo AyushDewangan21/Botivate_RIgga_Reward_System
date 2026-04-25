@@ -61,7 +61,7 @@ export default function SettingsView() {
   });
 
   const GOOGLE_SCRIPT_URL =
-    "https://script.google.com/macros/s/AKfycbzfcdevw5wZLelGrr2tNvN6-wU_OmXdfaDR6tFsOlwSQtd9TAqw9qUv0lVjzBDF-6iO/exec";
+    "https://script.google.com/macros/s/AKfycbwVbmFbljofC6OJTmDQSPEq7kx50RfE4ldf7yNopwQg_Bshbwf8Pj3XjAJCPZ_LDjNH/exec";
 
   const fetchUsers = async () => {
     setIsLoading(true);
@@ -340,11 +340,10 @@ export default function SettingsView() {
                               •
                             </span>
                             <span
-                              className={`inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider ${
-                                user.role.toLowerCase() === "admin"
-                                  ? "bg-red-50 text-red-600"
-                                  : "bg-blue-50 text-blue-600"
-                              }`}
+                              className={`inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider ${user.role.toLowerCase() === "admin"
+                                ? "bg-red-50 text-red-600"
+                                : "bg-blue-50 text-blue-600"
+                                }`}
                             >
                               {user.role}
                             </span>
