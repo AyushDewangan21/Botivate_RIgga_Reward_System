@@ -288,22 +288,19 @@ export default function PremiumTrackingSystem() {
 
     setIsLoading(true);
     try {
-      const response = await fetch(GOOGLE_SCRIPT_URL, {
-        method: "POST",
-        mode: "no-cors", // Note: no-cors means we can't read the response body, but the request will go through
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded",
-        },
-        body: new URLSearchParams({
-          action: "razorpayPayout",
-          name: coupon.claimedBy || "Customer",
-          upiId: coupon.upiId,
-          amount: (coupon.reward * 100).toString(), // Convert to paise
-          contact: coupon.phone || "9876543210",
-        }).toString(),
+      const queryParams = new URLSearchParams({
+        action: "razorpayPayout",
+        name: coupon.claimedBy || "Customer",
+        upiId: coupon.upiId,
+        amount: (coupon.reward * 100).toString(), // Convert to paise
+        contact: coupon.phone || "9876543210",
       });
 
-      alert("Payout request sent! Please check your RazorpayX dashboard for status.");
+      const response = await fetch(`${GOOGLE_SCRIPT_URL}?${queryParams.toString()}`);
+      // Since Google Script redirects, we might not be able to read JSON easily with mode: cors
+      // but using GET usually avoids the most common CORS preflight issues.
+      
+      alert("Payout request sent! Check your RazorpayX dashboard and Google Script Executions log for status.");
       refreshData();
     } catch (error) {
       console.error("Payout error:", error);

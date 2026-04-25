@@ -208,18 +208,13 @@ export default function QRCodeForm() {
         action: "razorpayPayout",
         name: formData.name,
         upiId: formData.upiId,
-        amount: (amount * 100).toString(), // Convert to paise (₹1 = 100 paise)
+        amount: (amount * 100).toString(), // Convert to paise
         contact: formData.phone,
-        email: "", // GAS helper will generate a dummy email if empty
+        email: "", 
         referenceId: `claim_${formData.couponCode.trim().toUpperCase()}_${Date.now()}`,
       });
 
-      const response = await fetch(GOOGLE_SCRIPT_URL, {
-        method: "POST",
-        headers: { "Content-Type": "application/x-www-form-urlencoded" },
-        body: payoutParams.toString(),
-      });
-
+      const response = await fetch(`${GOOGLE_SCRIPT_URL}?${payoutParams.toString()}`);
       const result = await response.json();
 
       if (result.success) {
