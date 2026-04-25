@@ -37,7 +37,8 @@ import {
 } from "@/components/ui/dialog";
 
 const GOOGLE_SCRIPT_URL =
-  "https://script.google.com/macros/s/AKfycbzfcdevw5wZLelGrr2tNvN6-wU_OmXdfaDR6tFsOlwSQtd9TAqw9qUv0lVjzBDF-6iO/exec";
+  "https://script.google.com/macros/s/AKfycbyadngWVh_zKgHMrglHxs3UI7jigReEjE__5Arxt0oMwR5rnl3UiJ_9EbsR4hQiPiNa/exec"
+
 const COUPONS_SHEET = "Coupons";
 const CONSUMERS_SHEET = "User_Claimed_Coupon";
 
@@ -292,10 +293,10 @@ export default function PremiumTrackingSystem() {
   const getFormLink = (couponCode: string): string => {
     // 1. Safe check for window during build
     if (typeof window === "undefined") return "";
-    
+
     // 2. Use the current origin (Vercel URL or localhost)
     const origin = window.location.origin;
-    
+
     return `${origin}/redeem?code=${encodeURIComponent(couponCode)}`;
   };
 
