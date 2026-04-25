@@ -61,7 +61,7 @@ export default function SettingsView() {
   });
 
   const GOOGLE_SCRIPT_URL =
-    "https://script.google.com/macros/s/AKfycbxMPctg38Fx_zxNaVsv9jbkiFvEdoo9Yp3Fu1O6R5vcZkXfx6VFqsEDbJex-Icdwyo/exec";
+    "https://script.google.com/macros/s/AKfycbzx7TVAWVJjTrHLWQJ_nKorZy33kuJ5JcYRdQ0vIekPiWrQy1ZXFdmk0wy7EMf_wIpb/exec";
 
   const fetchUsers = async () => {
     setIsLoading(true);

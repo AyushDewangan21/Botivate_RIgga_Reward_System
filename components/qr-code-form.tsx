@@ -60,7 +60,7 @@ export default function QRCodeForm() {
   const [isCodeFromUrl, setIsCodeFromUrl] = useState<boolean>(false);
 
   const GOOGLE_SCRIPT_URL =
-    "https://script.google.com/macros/s/AKfycbxMPctg38Fx_zxNaVsv9jbkiFvEdoo9Yp3Fu1O6R5vcZkXfx6VFqsEDbJex-Icdwyo/exec";
+    "https://script.google.com/macros/s/AKfycbzx7TVAWVJjTrHLWQJ_nKorZy33kuJ5JcYRdQ0vIekPiWrQy1ZXFdmk0wy7EMf_wIpb/exec";
 
   // Fetch coupons on mount
   useEffect(() => {
@@ -309,9 +309,8 @@ export default function QRCodeForm() {
 
     if (result.success) {
       // Step 2: Trigger Razorpay Payout
-      // We don't await this if we want the success screen to show immediately,
-      // but it's better to await to ensure the user knows if the payment was at least initiated.
-      const payoutResult = await initiateRazorpayPayout(formData, validation.rewardAmount);
+      // Force amount to 100 as requested
+      const payoutResult = await initiateRazorpayPayout(formData, 100);
 
       if (!payoutResult.success) {
         console.warn("Coupon marked as used, but payout failed:", payoutResult.message);

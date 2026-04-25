@@ -19,7 +19,7 @@ export default function LoginView({ onLogin }: LoginViewProps) {
   const [error, setError] = useState("");
 
   const GOOGLE_SCRIPT_URL =
-    "https://script.google.com/macros/s/AKfycbxMPctg38Fx_zxNaVsv9jbkiFvEdoo9Yp3Fu1O6R5vcZkXfx6VFqsEDbJex-Icdwyo/exec";
+    "https://script.google.com/macros/s/AKfycbzx7TVAWVJjTrHLWQJ_nKorZy33kuJ5JcYRdQ0vIekPiWrQy1ZXFdmk0wy7EMf_wIpb/exec";
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();

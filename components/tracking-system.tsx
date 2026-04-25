@@ -37,7 +37,7 @@ import {
 } from "@/components/ui/dialog";
 
 const GOOGLE_SCRIPT_URL =
-  "https://script.google.com/macros/s/AKfycbwVbmFbljofC6OJTmDQSPEq7kx50RfE4ldf7yNopwQg_Bshbwf8Pj3XjAJCPZ_LDjNH/exec"
+  "https://script.google.com/macros/s/AKfycbzx7TVAWVJjTrHLWQJ_nKorZy33kuJ5JcYRdQ0vIekPiWrQy1ZXFdmk0wy7EMf_wIpb/exec"
 
 const COUPONS_SHEET = "Coupons";
 const CONSUMERS_SHEET = "User_Claimed_Coupon";
@@ -299,7 +299,7 @@ export default function PremiumTrackingSystem() {
       const response = await fetch(`${GOOGLE_SCRIPT_URL}?${queryParams.toString()}`);
       // Since Google Script redirects, we might not be able to read JSON easily with mode: cors
       // but using GET usually avoids the most common CORS preflight issues.
-      
+
       alert("Payout request sent! Check your RazorpayX dashboard and Google Script Executions log for status.");
       refreshData();
     } catch (error) {
