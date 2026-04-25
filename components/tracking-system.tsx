@@ -290,9 +290,9 @@ export default function PremiumTrackingSystem() {
   };
 
   const getFormLink = (couponCode: string): string => {
-    return `${window.location.origin}/redeem?code=${encodeURIComponent(
-      couponCode,
-    )}`;
+    // Safe check for build time (SSR)
+    const origin = typeof window !== "undefined" ? window.location.origin : "";
+    return `${origin}/redeem?code=${encodeURIComponent(couponCode)}`;
   };
 
   // Function to load Hindi font for PDF
