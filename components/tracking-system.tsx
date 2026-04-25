@@ -290,8 +290,12 @@ export default function PremiumTrackingSystem() {
   };
 
   const getFormLink = (couponCode: string): string => {
-    // Safe check for build time (SSR)
-    const origin = typeof window !== "undefined" ? window.location.origin : "";
+    // 1. Safe check for window during build
+    if (typeof window === "undefined") return "";
+    
+    // 2. Use the current origin (Vercel URL or localhost)
+    const origin = window.location.origin;
+    
     return `${origin}/redeem?code=${encodeURIComponent(couponCode)}`;
   };
 
