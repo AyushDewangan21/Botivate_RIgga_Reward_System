@@ -276,6 +276,43 @@ export default function PremiumTrackingSystem() {
     }
   };
 
+  const handlePayout = async (coupon: Coupon) => {
+    if (!coupon.upiId || !coupon.reward) {
+      alert("Missing UPI ID or Reward amount for this coupon.");
+      return;
+    }
+
+    if (!confirm(`Are you sure you want to pay ₹${coupon.reward} to ${coupon.claimedBy || 'user'} via UPI (${coupon.upiId})?`)) {
+      return;
+    }
+
+    setIsLoading(true);
+    try {
+      const response = await fetch(GOOGLE_SCRIPT_URL, {
+        method: "POST",
+        mode: "no-cors", // Note: no-cors means we can't read the response body, but the request will go through
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+        body: new URLSearchParams({
+          action: "razorpayPayout",
+          name: coupon.claimedBy || "Customer",
+          upiId: coupon.upiId,
+          amount: (coupon.reward * 100).toString(), // Convert to paise
+          contact: coupon.phone || "9876543210",
+        }).toString(),
+      });
+
+      alert("Payout request sent! Please check your RazorpayX dashboard for status.");
+      refreshData();
+    } catch (error) {
+      console.error("Payout error:", error);
+      alert("Error initiating payout. Check console for details.");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   useEffect(() => {
     const fetchData = async () => {
       await fetchCoupons();
@@ -931,7 +968,7 @@ export default function PremiumTrackingSystem() {
               <div className="flex-col hidden h-full overflow-hidden bg-white border border-gray-100 shadow-sm lg:flex rounded-xl">
                 {/* Table Header - Fixed */}
                 <div className="flex-shrink-0 px-5 py-3 bg-gradient-to-r from-red-600 to-red-700">
-                  <div className="grid grid-cols-7 gap-4 text-xs font-medium tracking-wider text-white uppercase">
+                  <div className="grid grid-cols-8 gap-4 text-xs font-medium tracking-wider text-white uppercase">
                     <div>Code</div>
                     <div>Status</div>
                     <div>Reward</div>
@@ -939,6 +976,7 @@ export default function PremiumTrackingSystem() {
                     <div>Phone</div>
                     <div>UPI ID</div>
                     <div>Claimed At</div>
+                    <div>Action</div>
                   </div>
                 </div>
 
@@ -963,7 +1001,7 @@ export default function PremiumTrackingSystem() {
                       return (
                         <div
                           key={coupon.code}
-                          className={`grid grid-cols-7 gap-4 px-5 py-3.5 items-center hover:bg-red-50/10 transition-colors ${index % 2 === 0 ? "bg-white" : "bg-gray-50/30"
+                          className={`grid grid-cols-8 gap-4 px-5 py-3.5 items-center hover:bg-red-50/10 transition-colors ${index % 2 === 0 ? "bg-white" : "bg-gray-50/30"
                             }`}
                         >
                           <div className="font-mono text-sm font-semibold tracking-wide text-slate-800">
@@ -991,7 +1029,7 @@ export default function PremiumTrackingSystem() {
                             ₹{coupon.reward}
                           </div>
                           <div
-                            className="text-sm truncate text-slate-500"
+                            className="text-sm truncate text-slate-700 font-medium"
                             title={coupon.claimedBy || consumer?.name || ""}
                           >
                             {coupon.claimedBy || consumer?.name || "—"}
@@ -1003,16 +1041,31 @@ export default function PremiumTrackingSystem() {
                             {coupon.phone || consumer?.phone || "—"}
                           </div>
                           <div
-                            className="text-sm truncate text-slate-500"
+                            className="text-sm truncate text-slate-500 font-mono text-xs"
                             title={coupon.upiId || consumer?.upiId}
                           >
                             {coupon.upiId || consumer?.upiId || "—"}
                           </div>
-                          <div className="text-sm text-slate-500">
+                          <div className="text-xs text-slate-500">
                             {formatDate(
                               coupon.claimedAt ||
                               consumer?.date ||
                               coupon.created,
+                            )}
+                          </div>
+                          <div>
+                            {coupon.status === "used" && (coupon.upiId || consumer?.upiId) ? (
+                              <Button
+                                onClick={() => handlePayout(coupon)}
+                                size="sm"
+                                variant="outline"
+                                className="h-8 text-[10px] font-bold border-red-200 text-red-600 hover:bg-red-600 hover:text-white transition-all gap-1 shadow-sm"
+                              >
+                                <Wallet className="w-3 h-3" />
+                                Pay Now
+                              </Button>
+                            ) : (
+                              <span className="text-[10px] text-slate-300 italic">—</span>
                             )}
                           </div>
                         </div>
@@ -1139,6 +1192,18 @@ export default function PremiumTrackingSystem() {
                                 {coupon.upiId || consumer?.upiId || "—"}
                               </span>
                             </div>
+                            {/* Action Button - Only for used coupons with UPI */}
+                            {coupon.status === "used" && (coupon.upiId || consumer?.upiId) && (
+                              <div className="mt-4 pt-3 border-t border-gray-100">
+                                <Button
+                                  onClick={() => handlePayout(coupon)}
+                                  className="w-full h-10 text-xs font-bold bg-red-600 hover:bg-red-700 text-white shadow-md shadow-red-200 gap-2 rounded-xl"
+                                >
+                                  <Wallet className="w-4 h-4" />
+                                  Transfer ₹{coupon.reward} Now
+                                </Button>
+                              </div>
+                            )}
                           </div>
                         </CardContent>
                       </Card>
