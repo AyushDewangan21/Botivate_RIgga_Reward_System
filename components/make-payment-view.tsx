@@ -25,7 +25,7 @@ import {
 } from "lucide-react";
 
 const GOOGLE_SCRIPT_URL =
-  "https://script.google.com/macros/s/AKfycbwVbmFbljofC6OJTmDQSPEq7kx50RfE4ldf7yNopwQg_Bshbwf8Pj3XjAJCPZ_LDjNH/exec";
+  "https://script.google.com/macros/s/AKfycbzebb9kfKcTohyfXoyRYFkM5f7LCZdj2CUPlLjllKPm1j_rOJsruNUp6BnXBrQktzTB/exec";
 const COUPONS_SHEET = "Coupons";
 
 interface PaymentItem {
