@@ -60,7 +60,7 @@ export default function QRCodeForm() {
   const [isCodeFromUrl, setIsCodeFromUrl] = useState<boolean>(false);
 
   const GOOGLE_SCRIPT_URL =
-    "https://script.google.com/macros/s/AKfycbzebb9kfKcTohyfXoyRYFkM5f7LCZdj2CUPlLjllKPm1j_rOJsruNUp6BnXBrQktzTB/exec";
+    "https://script.google.com/macros/s/AKfycbxMPctg38Fx_zxNaVsv9jbkiFvEdoo9Yp3Fu1O6R5vcZkXfx6VFqsEDbJex-Icdwyo/exec";
 
   // Fetch coupons on mount
   useEffect(() => {
@@ -210,7 +210,7 @@ export default function QRCodeForm() {
         upiId: formData.upiId,
         amount: (amount * 100).toString(), // Convert to paise
         contact: formData.phone,
-        email: "", 
+        email: "",
         referenceId: `claim_${formData.couponCode.trim().toUpperCase()}_${Date.now()}`,
       });
 
