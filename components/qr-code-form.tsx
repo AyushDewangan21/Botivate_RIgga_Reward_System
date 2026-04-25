@@ -196,6 +196,44 @@ export default function QRCodeForm() {
     }
   };
 
+  /**
+   * Initiates the Razorpay Payout through Google Apps Script
+   */
+  const initiateRazorpayPayout = async (
+    formData: FormData,
+    amount: number
+  ): Promise<{ success: boolean; message: string }> => {
+    try {
+      const payoutParams = new URLSearchParams({
+        action: "razorpayPayout",
+        name: formData.name,
+        upiId: formData.upiId,
+        amount: (amount * 100).toString(), // Convert to paise (₹1 = 100 paise)
+        contact: formData.phone,
+        email: "", // GAS helper will generate a dummy email if empty
+        referenceId: `claim_${formData.couponCode.trim().toUpperCase()}_${Date.now()}`,
+      });
+
+      const response = await fetch(GOOGLE_SCRIPT_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: payoutParams.toString(),
+      });
+
+      const result = await response.json();
+      
+      if (result.success) {
+        return { success: true, message: "Payout initiated successfully!" };
+      } else {
+        console.error("Razorpay Error:", result.error);
+        return { success: false, message: result.error || "Payout failed" };
+      }
+    } catch (error) {
+      console.error("Error calling Razorpay via GAS:", error);
+      return { success: false, message: "Payment service unavailable" };
+    }
+  };
+
   // Removed markCouponAsUsed because it's now integrated into handleSubmit for parallel execution
 
   // Use Next.js search params hook
@@ -274,7 +312,18 @@ export default function QRCodeForm() {
 
     const result = await submitToGoogleSheets(formData);
 
-    if (!result.success) {
+    if (result.success) {
+      // Step 2: Trigger Razorpay Payout
+      // We don't await this if we want the success screen to show immediately,
+      // but it's better to await to ensure the user knows if the payment was at least initiated.
+      const payoutResult = await initiateRazorpayPayout(formData, validation.rewardAmount);
+      
+      if (!payoutResult.success) {
+        console.warn("Coupon marked as used, but payout failed:", payoutResult.message);
+        // We still show success because the coupon is used, but maybe add a note?
+        // For now, we'll just log it to avoid confusing the user if the money arrives shortly.
+      }
+    } else {
       setMessage({ type: "error", content: result.message });
     }
 

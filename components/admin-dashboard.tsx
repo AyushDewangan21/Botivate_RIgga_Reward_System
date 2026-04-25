@@ -27,7 +27,9 @@ import {
 } from "lucide-react";
 
 const GOOGLE_SCRIPT_URL =
-  "https://script.google.com/macros/s/AKfycbzfcdevw5wZLelGrr2tNvN6-wU_OmXdfaDR6tFsOlwSQtd9TAqw9qUv0lVjzBDF-6iO/exec";
+  // "https://script.google.com/macros/s/AKfycbzfcdevw5wZLelGrr2tNvN6-wU_OmXdfaDR6tFsOlwSQtd9TAqw9qUv0lVjzBDF-6iO/exec";
+  "https://script.google.com/macros/s/AKfycbxbNUankyfRTMJNCKc-3RV7fdc-_t0R9wqTGShYowk/dev";
+
 const SHEET_NAME = "Coupons";
 
 interface Coupon {
@@ -90,9 +92,8 @@ const CouponTable = ({
           {/* Table Header */}
           <div className="bg-gradient-to-r from-red-600 to-red-700 px-5 py-3">
             <div
-              className={`grid ${
-                showClaimInfo ? "grid-cols-7" : "grid-cols-5"
-              } gap-4 text-xs font-medium text-white uppercase tracking-wider`}
+              className={`grid ${showClaimInfo ? "grid-cols-7" : "grid-cols-5"
+                } gap-4 text-xs font-medium text-white uppercase tracking-wider`}
             >
               <div>Code</div>
               <div>Status</div>
@@ -109,33 +110,29 @@ const CouponTable = ({
             {coupons.map((coupon, index) => (
               <div
                 key={coupon.id}
-                className={`grid ${
-                  showClaimInfo ? "grid-cols-7" : "grid-cols-5"
-                } gap-4 px-5 py-3.5 items-center hover:bg-red-50/30 transition-colors ${
-                  index % 2 === 0 ? "bg-white" : "bg-gray-50/30"
-                }`}
+                className={`grid ${showClaimInfo ? "grid-cols-7" : "grid-cols-5"
+                  } gap-4 px-5 py-3.5 items-center hover:bg-red-50/30 transition-colors ${index % 2 === 0 ? "bg-white" : "bg-gray-50/30"
+                  }`}
               >
                 <div className="font-mono text-sm font-semibold text-slate-800 tracking-wide">
                   {coupon.code}
                 </div>
                 <div>
                   <span
-                    className={`inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium ${
-                      coupon.status === "used"
-                        ? "bg-green-100 text-green-700"
-                        : coupon.status === "deleted"
+                    className={`inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium ${coupon.status === "used"
+                      ? "bg-green-100 text-green-700"
+                      : coupon.status === "deleted"
                         ? "bg-gray-100 text-gray-500"
                         : "bg-red-100 text-red-700"
-                    }`}
+                      }`}
                   >
                     <span
-                      className={`w-1.5 h-1.5 rounded-full mr-1.5 ${
-                        coupon.status === "used"
-                          ? "bg-green-500"
-                          : coupon.status === "deleted"
+                      className={`w-1.5 h-1.5 rounded-full mr-1.5 ${coupon.status === "used"
+                        ? "bg-green-500"
+                        : coupon.status === "deleted"
                           ? "bg-gray-400"
                           : "bg-red-500"
-                      }`}
+                        }`}
                     />
                     {coupon.status}
                   </span>
@@ -216,13 +213,12 @@ const CouponTable = ({
                   {coupon.code}
                 </div>
                 <span
-                  className={`inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium ${
-                    coupon.status === "used"
-                      ? "bg-green-100 text-green-700"
-                      : coupon.status === "deleted"
+                  className={`inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium ${coupon.status === "used"
+                    ? "bg-green-100 text-green-700"
+                    : coupon.status === "deleted"
                       ? "bg-gray-100 text-gray-500"
                       : "bg-red-100 text-red-700"
-                  }`}
+                    }`}
                 >
                   {coupon.status}
                 </span>
@@ -447,7 +443,7 @@ export default function PremiumAdminDashboard() {
       console.error("Error generating coupons:", error);
       alert(
         "Error generating coupons: " +
-          (error instanceof Error ? error.message : "Unknown error")
+        (error instanceof Error ? error.message : "Unknown error")
       );
     } finally {
       setIsGenerating(false);
@@ -475,7 +471,7 @@ export default function PremiumAdminDashboard() {
       console.error("Error deleting coupon:", error);
       alert(
         "Error deleting coupon: " +
-          (error instanceof Error ? error.message : "Unknown error")
+        (error instanceof Error ? error.message : "Unknown error")
       );
     } finally {
       setIsDeleting(false);
@@ -690,21 +686,19 @@ export default function PremiumAdminDashboard() {
               <div className="flex bg-slate-100 p-1 rounded-xl">
                 <button
                   onClick={() => setActiveTab("unused")}
-                  className={`px-3 py-1.5 text-xs font-medium rounded-lg transition-all ${
-                    activeTab === "unused"
-                      ? "bg-white text-red-600 shadow-sm"
-                      : "text-slate-500 hover:text-slate-700"
-                  }`}
+                  className={`px-3 py-1.5 text-xs font-medium rounded-lg transition-all ${activeTab === "unused"
+                    ? "bg-white text-red-600 shadow-sm"
+                    : "text-slate-500 hover:text-slate-700"
+                    }`}
                 >
                   Unused ({unusedCoupons.length})
                 </button>
                 <button
                   onClick={() => setActiveTab("used")}
-                  className={`px-3 py-1.5 text-xs font-medium rounded-lg transition-all ${
-                    activeTab === "used"
-                      ? "bg-white text-red-600 shadow-sm"
-                      : "text-slate-500 hover:text-slate-700"
-                  }`}
+                  className={`px-3 py-1.5 text-xs font-medium rounded-lg transition-all ${activeTab === "used"
+                    ? "bg-white text-red-600 shadow-sm"
+                    : "text-slate-500 hover:text-slate-700"
+                    }`}
                 >
                   Used ({usedCoupons.length})
                 </button>
