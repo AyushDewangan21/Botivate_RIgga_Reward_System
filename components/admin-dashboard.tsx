@@ -27,8 +27,7 @@ import {
 } from "lucide-react";
 
 const GOOGLE_SCRIPT_URL =
-  // "https://script.google.com/macros/s/AKfycbzfcdevw5wZLelGrr2tNvN6-wU_OmXdfaDR6tFsOlwSQtd9TAqw9qUv0lVjzBDF-6iO/exec";
-  "https://script.google.com/macros/s/AKfycbxbNUankyfRTMJNCKc-3RV7fdc-_t0R9wqTGShYowk/dev";
+  "https://script.google.com/macros/s/AKfycbwVbmFbljofC6OJTmDQSPEq7kx50RfE4ldf7yNopwQg_Bshbwf8Pj3XjAJCPZ_LDjNH/exec"
 
 const SHEET_NAME = "Coupons";
 
